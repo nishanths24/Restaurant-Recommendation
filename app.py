@@ -44,7 +44,17 @@ def create_app(config_class=Config):
                 error_message="The restaurant dataset could not be loaded. Please run 'python scripts/preprocess_data.py'."
             ), 500
         options = app.recommender.get_filter_options()
-        return render_template("index.html", options=options, active_page="home")
+        try:
+            top_rec = app.recommender.recommend({})
+            featured_restaurants = top_rec.get("recommendations", [])[:4]
+        except Exception:
+            featured_restaurants = []
+        return render_template(
+            "index.html",
+            options=options,
+            featured_restaurants=featured_restaurants,
+            active_page="home"
+        )
 
     @app.route("/find", methods=["GET"])
     def find_page():

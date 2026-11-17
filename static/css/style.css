@@ -757,3 +757,470 @@ a.btn-danger:active {
 ::-webkit-scrollbar-thumb:hover {
     background: #30302D;
 }
+
+/* ==========================================================================
+   Cinematic Editorial Redesign Styles (Resto UI / The Nocturne Architecture)
+   ========================================================================== */
+
+/* Editorial Circled-Arrow Buttons */
+.btn-editorial-primary {
+    background: #C58A36 !important;
+    color: #090B0D !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem;
+    padding: 8px 10px 8px 24px;
+    border-radius: 50px !important;
+    border: 1px solid #C58A36 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-editorial-primary:hover {
+    background: #b0782b !important;
+    border-color: #b0782b !important;
+    color: #090B0D !important;
+}
+
+.btn-editorial-secondary {
+    background: #202224 !important;
+    color: #E5E1D9 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 10px 8px 24px;
+    border-radius: 50px !important;
+    border: 1px solid #30302D !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-editorial-secondary:hover {
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+}
+
+.btn-arrow-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #090B0D;
+    color: #C58A36;
+    font-size: 0.85rem;
+}
+
+.btn-editorial-secondary .btn-arrow-circle {
+    background: #17191B;
+    color: #D6B77A;
+    border: 1px solid #30302D;
+}
+
+/* Section 1: Hero Editorial */
+.hero-editorial-section {
+    padding: 4.5rem 0 3.5rem;
+    position: relative;
+    border-bottom: 1px solid #30302D;
+    background: #090B0D;
+}
+
+.hero-eyebrow-minimal {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #A6A29A;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-eyebrow-minimal .hero-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #C58A36;
+}
+
+.hero-headline-cinematic {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    color: #E5E1D9;
+    margin-bottom: 1.5rem;
+}
+
+.hero-headline-cinematic .serif-italic {
+    font-style: italic;
+    color: #D6B77A;
+}
+
+.hero-editorial-desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #A6A29A;
+    max-width: 520px;
+    margin-bottom: 2rem;
+}
+
+.hero-meta-strip {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #737069;
+    padding-top: 1.5rem;
+    border-top: 1px solid #30302D;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.hero-dish-frame {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #17191B;
+    border: 1px solid #30302D;
+}
+
+.hero-dish-frame img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-dish-caption {
+    background: #17191B;
+    border-top: 1px solid #30302D;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Section 2: Our Philosophy */
+.philosophy-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.section-eyebrow {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #D6B77A;
+    margin-bottom: 0.6rem;
+}
+
+.section-editorial-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 700;
+    color: #E5E1D9;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+}
+
+.philosophy-card {
+    position: relative;
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 10px;
+    padding: 2.2rem 1.8rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+.philosophy-card:hover {
+    border-color: #454540;
+}
+
+.philosophy-watermark {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-family: var(--font-serif);
+    font-size: 4.8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #202224;
+    user-select: none;
+    pointer-events: none;
+}
+
+.philosophy-step {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #D6B77A;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.philosophy-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #E5E1D9;
+    margin-bottom: 0.75rem;
+}
+
+.philosophy-card-body {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #A6A29A;
+    margin-bottom: 0;
+}
+
+/* Section 3: Tonight's Discoveries */
+.discoveries-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.discovery-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 10px;
+    padding: 1.8rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.15s ease;
+}
+
+.discovery-card:hover {
+    border-color: #454540;
+}
+
+.discovery-badge {
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #D6B77A;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.discovery-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #E5E1D9;
+    margin-bottom: 0.35rem;
+}
+
+.discovery-location {
+    font-size: 0.82rem;
+    color: #A6A29A;
+    margin-bottom: 0.85rem;
+}
+
+.discovery-cuisine-tag {
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #E5E1D9;
+    font-size: 0.74rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.discovery-metric-strip {
+    background: #202224;
+    border: 1px solid #30302D;
+    border-radius: 6px;
+    padding: 0.65rem 0.85rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+}
+
+/* Section 4: The DineMind Experience */
+.experience-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.engine-pillar-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.15s ease;
+}
+
+.engine-pillar-card:hover {
+    border-color: #454540;
+}
+
+.engine-pillar-weight {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #D6B77A;
+    min-width: 52px;
+    text-align: center;
+}
+
+.quick-launchpad-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 12px;
+    padding: 2.2rem;
+}
+
+/* Section 5: Signature Editorial Footer */
+.signature-footer-section {
+    background: #090B0D;
+    padding: 5rem 0 3rem;
+    border-top: 1px solid #30302D;
+}
+
+.footer-top-row {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #30302D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-slogan {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #D6B77A;
+    text-transform: uppercase;
+}
+
+.footer-nav-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.footer-nav-links a {
+    color: #A6A29A;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-nav-links a:hover {
+    color: #E5E1D9;
+}
+
+.back-to-top-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #E5E1D9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.back-to-top-btn:hover {
+    background: #282a2d;
+    border-color: #454540;
+    color: #D6B77A;
+}
+
+.footer-wordmark-huge {
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 11vw, 9.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #17191B;
+    -webkit-text-stroke: 1px #30302D;
+    text-transform: none;
+    text-align: center;
+    padding: 3rem 0 2rem;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.footer-wordmark-huge:hover {
+    color: #202224;
+}
+
+.footer-stats-strip {
+    padding: 1.5rem 0;
+    border-top: 1px solid #30302D;
+    border-bottom: 1px solid #30302D;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+    text-align: center;
+}
+
+.footer-stat-number {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #D6B77A;
+}
+
+.footer-stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #737069;
+}
+
+.footer-bottom-row {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.78rem;
+    color: #737069;
+}
