@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--border-glass) !important;">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: #30302D !important;">
         <div>
             <div class="section-subtitle">Venue Directory</div>
             <h1 class="font-serif fw-bold text-white mb-1">
@@ -111,7 +111,7 @@
                         </div>
 
                         <!-- Details Row -->
-                        <div class="d-flex justify-content-between align-items-center py-2 border-top border-bottom my-2 small" style="border-color: var(--border-glass) !important;">
+                        <div class="d-flex justify-content-between align-items-center py-2 border-top border-bottom my-2 small" style="border-color: #30302D !important;">
                             <span class="text-secondary">
                                 Price: <strong class="text-warning">{% for _ in range(r.price_range) %}${% endfor %}</strong>
                             </span>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color: var(--border-glass) !important;">
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color: #30302D !important;">
                         <a href="{{ url_for('similar', restaurant_id=r.restaurant_id) }}" class="btn btn-sm btn-pill-secondary py-1 px-3" style="font-size: 0.8rem;">
                             <i class="bi bi-diagram-3 me-1"></i> Similar Venues
                         </a>

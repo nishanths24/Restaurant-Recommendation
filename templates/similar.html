@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container py-4">
     <!-- Breadcrumb & Title -->
-    <div class="mb-4 pb-3 border-bottom d-flex flex-wrap justify-content-between align-items-center" style="border-color: var(--border-glass) !important;">
+    <div class="mb-4 pb-3 border-bottom d-flex flex-wrap justify-content-between align-items-center" style="border-color: #30302D !important;">
         <div>
             <div class="section-subtitle">Content Vector Proximity</div>
             <h1 class="font-serif fw-bold text-white mb-1">
@@ -43,12 +43,12 @@
                 </div>
             </div>
             <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                <div class="d-inline-block text-center p-2 px-3 rounded" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                <div class="d-inline-block text-center p-2 px-3 rounded" style="background: #202224; border: 1px solid #30302D;">
                     <div class="text-muted small">Rating</div>
                     <div class="fw-bold text-success fs-5">★ {{ target.aggregate_rating }}</div>
                     <div class="text-muted" style="font-size: 0.7rem;">{{ target.votes }} votes</div>
                 </div>
-                <div class="d-inline-block text-center p-2 px-3 rounded ms-2" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                <div class="d-inline-block text-center p-2 px-3 rounded ms-2" style="background: #202224; border: 1px solid #30302D;">
                     <div class="text-muted small">Price Tier</div>
                     <div class="fw-bold text-warning fs-5">{% for _ in range(target.price_range) %}${% endfor %}</div>
                     <div class="text-muted" style="font-size: 0.7rem;">Tier {{ target.price_range }} of 4</div>
@@ -99,7 +99,7 @@
                                 {% endfor %}
                             </div>
 
-                            <div class="d-flex justify-content-between align-items-center py-2 rounded px-2 small my-2" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                            <div class="d-flex justify-content-between align-items-center py-2 rounded px-2 small my-2" style="background: #202224; border: 1px solid #30302D;">
                                 <div>
                                     <span class="text-muted">Rating:</span>
                                     <strong class="text-success">★ {{ r.rating }}</strong>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="pt-2 text-end border-top" style="border-color: var(--border-glass) !important;">
+                        <div class="pt-2 text-end border-top" style="border-color: #30302D !important;">
                             <a href="{{ url_for('similar', restaurant_id=r.restaurant_id) }}" class="btn btn-sm btn-pill-secondary py-1 px-3" style="font-size: 0.8rem;">
                                 Explore Similar
                             </a>

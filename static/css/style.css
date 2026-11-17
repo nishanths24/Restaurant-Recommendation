@@ -1,46 +1,60 @@
 /* ==========================================================================
-   DineMind — Minimalist Luxury Dark Theme Stylesheet
-   Clean flat surfaces, zero glow, subtle neutral borders, orange gradient CTAs
+   DineMind — Understated Dark Luxury / Editorial Restaurant Design Stylesheet
+   Color Palette:
+     Main background:     #090B0D
+     Card background:     #17191B
+     Secondary surfaces:  #202224
+     Primary accent:      #C58A36 (muted warm amber)
+     Secondary accent:    #D6B77A (soft champagne)
+     Primary text:        #E5E1D9
+     Secondary text:      #A6A29A
+     Borders:             #30302D
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --bg-black: #080a0e;
-    --bg-dark-1: #0d1017;
-    --bg-dark-2: #121620;
-    --bg-card: #0f131a;
-    --bg-card-hover: #141923;
-    --border-neutral: rgba(255, 255, 255, 0.08);
-    --border-neutral-hover: rgba(255, 255, 255, 0.16);
+    --bg-main: #090B0D;
+    --bg-card: #17191B;
+    --bg-surface: #202224;
+    --bg-surface-hover: #282a2d;
     
-    --amber-primary: #f59e0b;
-    --amber-hover: #d97706;
-    --amber-light: #fbbf24;
+    --accent-primary: #C58A36;
+    --accent-primary-hover: #b0782b;
+    --accent-secondary: #D6B77A;
     
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-primary: #E5E1D9;
+    --text-secondary: #A6A29A;
+    --text-muted: #737069;
+    
+    --border-color: #30302D;
+    --border-glass: #30302D;
+    --border-neutral: #30302D;
     
     --font-serif: 'Playfair Display', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* ==========================================================================
-   Global Reset for Glow, Drop-Shadow, and Excessive Shadows
+   Global Reset: Zero Glow, Zero Shadows, Zero Filter Effects
    ========================================================================== */
 *,
 *::before,
 *::after {
+    box-shadow: none !important;
     text-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
-/* Base Body Setup: Clean Deep Solid Black/Charcoal Background */
+/* Base Body: Flat Deep Background */
 body {
     font-family: var(--font-sans);
-    background-color: var(--bg-black) !important;
+    background-color: #090B0D !important;
     background-image: none !important;
-    color: var(--text-primary);
+    color: #E5E1D9 !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -60,11 +74,20 @@ main {
     font-family: var(--font-sans);
 }
 
-/* Top Navigation Bar: Subtle Neutral Border, Zero Glow */
+h1, h2, h3, h4, h5, h6 {
+    color: #E5E1D9;
+}
+
+p, span, div {
+    color: inherit;
+}
+
+/* ==========================================================================
+   Top Navigation Bar
+   ========================================================================== */
 .navbar-custom {
-    background: #090c11 !important;
-    border-bottom: 1px solid var(--border-neutral) !important;
-    box-shadow: none !important;
+    background: #090B0D !important;
+    border-bottom: 1px solid #30302D !important;
     padding: 0.85rem 0;
 }
 
@@ -73,11 +96,10 @@ main {
     font-weight: 700;
     font-size: 1.55rem;
     letter-spacing: -0.5px;
-    color: #ffffff !important;
+    color: #E5E1D9 !important;
     display: flex;
     align-items: center;
     text-decoration: none;
-    box-shadow: none !important;
 }
 
 .brand-icon-wrapper {
@@ -86,48 +108,43 @@ main {
     justify-content: center;
     width: 38px;
     height: 38px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid var(--border-neutral) !important;
-    color: var(--amber-light);
+    border-radius: 8px;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
     margin-right: 10px;
-    box-shadow: none !important;
 }
 
 .navbar-nav .nav-link {
-    color: var(--text-secondary);
+    color: #A6A29A !important;
     font-weight: 500;
     font-size: 0.92rem;
     padding: 0.5rem 1rem !important;
-    transition: color 0.2s ease, background 0.2s ease;
     border-radius: 20px;
-    box-shadow: none !important;
+    transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: none !important;
+    color: #E5E1D9 !important;
+    background: #202224 !important;
 }
 
 .navbar-nav .nav-link.active {
-    color: #ffffff !important;
+    color: #D6B77A !important;
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid var(--border-neutral) !important;
-    box-shadow: none !important;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
 }
 
 .nav-guest-pill {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-neutral);
-    color: var(--text-secondary);
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    color: #A6A29A !important;
     font-size: 0.82rem;
     padding: 6px 14px;
     border-radius: 30px;
     display: inline-flex;
     align-items: center;
-    box-shadow: none !important;
 }
 
 /* ==========================================================================
@@ -147,7 +164,7 @@ main {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--text-muted);
+    color: #A6A29A !important;
     margin-bottom: 1.5rem;
 }
 
@@ -155,8 +172,7 @@ main {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--amber-primary);
-    box-shadow: none !important;
+    background-color: #C58A36 !important;
 }
 
 .hero-title {
@@ -165,40 +181,41 @@ main {
     font-size: clamp(2.5rem, 5vw, 4.2rem);
     line-height: 1.1;
     letter-spacing: -1px;
-    color: #ffffff;
+    color: #E5E1D9 !important;
     margin-bottom: 1.5rem;
-    text-shadow: none !important;
 }
 
 .hero-title .highlight {
-    background: linear-gradient(135deg, #ffffff 40%, var(--amber-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #D6B77A !important;
+    color: #D6B77A !important;
 }
 
 .hero-description {
     font-size: 1.1rem;
     line-height: 1.65;
-    color: var(--text-secondary);
+    color: #A6A29A !important;
     max-width: 520px;
     margin-bottom: 2.2rem;
 }
 
 /* ==========================================================================
-   Clean Orange Gradient Buttons (Zero Glow, Zero Outer Shadow)
+   Buttons (Solid Muted Amber #C58A36, Dark Charcoal Text, Zero Glow)
    ========================================================================== */
 .btn-pill-primary,
 .recommend-btn,
 .get-recommendations-btn,
 button.btn-danger,
-a.btn-danger {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-    color: #080a0e !important;
+a.btn-danger,
+.btn-warning {
+    background: #C58A36 !important;
+    color: #090B0D !important;
     font-weight: 700 !important;
     font-size: 0.95rem;
     padding: 12px 28px;
     border-radius: 50px !important;
-    border: none !important;
+    border: 1px solid #C58A36 !important;
     outline: none !important;
     display: inline-flex;
     align-items: center;
@@ -206,20 +223,22 @@ a.btn-danger {
     text-decoration: none;
     box-shadow: none !important;
     filter: none !important;
-    transition: transform 0.2s ease, opacity 0.2s ease !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
 }
 
 .btn-pill-primary:hover,
 .recommend-btn:hover,
 .get-recommendations-btn:hover,
 button.btn-danger:hover,
-a.btn-danger:hover {
-    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
-    color: #000000 !important;
-    transform: translateY(-1px);
+a.btn-danger:hover,
+.btn-warning:hover {
+    background: #b0782b !important;
+    border-color: #b0782b !important;
+    color: #090B0D !important;
+    transform: none !important;
     box-shadow: none !important;
     filter: none !important;
-    opacity: 0.96;
 }
 
 .btn-pill-primary:active,
@@ -227,90 +246,81 @@ a.btn-danger:hover {
 .get-recommendations-btn:active,
 button.btn-danger:active,
 a.btn-danger:active {
-    transform: translateY(0);
-    box-shadow: none !important;
-    filter: none !important;
+    background: #a06b23 !important;
+    border-color: #a06b23 !important;
+    transform: none !important;
 }
 
 .btn-pill-primary:focus-visible,
 .recommend-btn:focus-visible,
 .get-recommendations-btn:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.4) !important;
+    outline: 2px solid #D6B77A !important;
     outline-offset: 2px !important;
-    box-shadow: none !important;
-    filter: none !important;
 }
 
-.btn-pill-primary::before,
-.btn-pill-primary::after,
-.recommend-btn::before,
-.recommend-btn::after,
-.get-recommendations-btn::before,
-.get-recommendations-btn::after {
-    box-shadow: none !important;
-    filter: none !important;
-}
-
-/* Secondary Ghost Buttons */
+/* Secondary Buttons */
 .btn-pill-secondary {
-    background: rgba(255, 255, 255, 0.04) !important;
-    color: #ffffff !important;
+    background: #202224 !important;
+    color: #E5E1D9 !important;
     font-weight: 600;
     font-size: 0.95rem;
     padding: 11px 26px;
     border-radius: 50px !important;
-    border: 1px solid var(--border-neutral) !important;
+    border: 1px solid #30302D !important;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
     text-decoration: none;
     box-shadow: none !important;
     filter: none !important;
+    transform: none !important;
 }
 
 .btn-pill-secondary:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-    box-shadow: none !important;
-    filter: none !important;
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    transform: none !important;
 }
 
 .btn-pill-secondary:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.4) !important;
+    outline: 2px solid #D6B77A !important;
     outline-offset: 2px !important;
-    box-shadow: none !important;
 }
 
-/* Outline Warning Buttons: Clean, No Glow */
+/* Small Action / Outline Buttons */
 .btn-outline-warning {
-    color: var(--amber-light) !important;
-    border-color: rgba(255, 255, 255, 0.15) !important;
-    background: transparent !important;
+    color: #D6B77A !important;
+    border-color: #30302D !important;
+    background: #202224 !important;
     box-shadow: none !important;
     filter: none !important;
-    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
 }
 
 .btn-outline-warning:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-    box-shadow: none !important;
-    filter: none !important;
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    transform: none !important;
 }
 
-.btn-outline-warning:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.4) !important;
-    outline-offset: 2px !important;
-    box-shadow: none !important;
+.btn-outline-secondary {
+    color: #A6A29A !important;
+    border-color: #30302D !important;
+    background: #202224 !important;
+}
+
+.btn-outline-secondary:hover {
+    color: #E5E1D9 !important;
+    background: #282a2d !important;
+    border-color: #454540 !important;
 }
 
 /* ==========================================================================
-   Hero Visual & Flat Cards
+   Hero Visual Presentation & Cards (Flat #17191B, Borders #30302D)
    ========================================================================== */
 .hero-visual-container {
     position: relative;
@@ -323,12 +333,10 @@ a.btn-danger:active {
     position: relative;
     width: 100%;
     max-width: 490px;
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
-    background: #0d1017;
-    border: 1px solid var(--border-neutral) !important;
-    box-shadow: none !important;
-    filter: none !important;
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
 }
 
 .hero-dish-img {
@@ -336,7 +344,7 @@ a.btn-danger:active {
     height: 380px;
     object-fit: cover;
     display: block;
-    filter: brightness(0.95) contrast(1.05);
+    filter: brightness(0.92) contrast(1.05);
 }
 
 .hero-dish-overlay {
@@ -344,84 +352,78 @@ a.btn-danger:active {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(180deg, transparent 0%, rgba(7, 9, 12, 0.95) 80%);
+    padding: 1.15rem 1.5rem;
+    background: #17191B !important;
+    border-top: 1px solid #30302D !important;
 }
 
-/* Feature Cards: Flat Surface, Neutral Border */
 .feature-badge-card {
-    background: #0d1117 !important;
-    border: 1px solid var(--border-neutral) !important;
-    border-radius: 12px;
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
     padding: 0.9rem 1.15rem;
     margin-bottom: 0.85rem;
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-    box-shadow: none !important;
-    filter: none !important;
+    transition: border-color 0.15s ease;
 }
 
 .feature-badge-card:hover {
-    border-color: rgba(255, 255, 255, 0.18) !important;
-    transform: translateY(-1px);
-    box-shadow: none !important;
+    border-color: #454540 !important;
+    transform: none !important;
 }
 
 .feature-icon-circle {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid var(--border-neutral) !important;
-    color: var(--amber-light);
+    border-radius: 8px;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.15rem;
     flex-shrink: 0;
-    box-shadow: none !important;
 }
 
 .feature-card-title {
     font-size: 0.92rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #E5E1D9 !important;
     margin-bottom: 2px;
 }
 
 .feature-card-desc {
     font-size: 0.78rem;
-    color: var(--text-secondary);
+    color: #A6A29A !important;
     line-height: 1.35;
     margin-bottom: 0;
 }
 
 .hero-info-footer-card {
-    background: #0d1117 !important;
-    border: 1px solid var(--border-neutral) !important;
-    border-radius: 12px;
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
     padding: 1rem 1.25rem;
     margin-top: 1rem;
     font-size: 0.82rem;
-    color: var(--text-secondary);
+    color: #A6A29A !important;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: none !important;
 }
 
 /* ==========================================================================
-   Statistics Section
+   Statistics Section (Flat #17191B, Borders #30302D)
    ========================================================================== */
 .stats-section {
     padding: 2.5rem 0;
-    border-top: 1px solid var(--border-neutral);
-    border-bottom: 1px solid var(--border-neutral);
-    background: #090c10 !important;
+    border-top: 1px solid #30302D !important;
+    border-bottom: 1px solid #30302D !important;
+    background: #17191B !important;
     margin-bottom: 3.5rem;
-    box-shadow: none !important;
 }
 
 .stat-item {
@@ -433,13 +435,12 @@ a.btn-danger:active {
     font-family: var(--font-serif);
     font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 800;
-    color: #ffffff;
+    color: #D6B77A !important;
     line-height: 1;
     margin-bottom: 0.4rem;
-    background: linear-gradient(135deg, #ffffff 40%, var(--amber-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: none !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #D6B77A !important;
 }
 
 .stat-label {
@@ -447,28 +448,25 @@ a.btn-danger:active {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--text-secondary);
+    color: #A6A29A !important;
 }
 
 .stat-subtext {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: #737069 !important;
 }
 
 /* ==========================================================================
-   Flat Dark Panels & Containers (Zero Glow, Neutral Separators)
+   Panels, Forms & Cards (#17191B, Borders #30302D)
    ========================================================================== */
 .glass-panel {
-    background: #0f131a !important;
-    border: 1px solid var(--border-neutral) !important;
-    border-radius: 16px;
-    box-shadow: none !important;
-    filter: none !important;
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 14px;
 }
 
 .glass-panel:hover {
-    border-color: rgba(255, 255, 255, 0.12) !important;
-    box-shadow: none !important;
+    border-color: #454540 !important;
 }
 
 .section-heading-wrapper {
@@ -476,7 +474,7 @@ a.btn-danger:active {
 }
 
 .section-subtitle {
-    color: var(--amber-light);
+    color: #D6B77A !important;
     font-size: 0.82rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -488,15 +486,15 @@ a.btn-danger:active {
     font-family: var(--font-serif);
     font-weight: 700;
     font-size: 2.2rem;
-    color: #ffffff;
+    color: #E5E1D9 !important;
     letter-spacing: -0.5px;
 }
 
 .form-section-title-dark {
     font-weight: 700;
     font-size: 1.05rem;
-    color: #ffffff;
-    border-bottom: 1px solid var(--border-neutral);
+    color: #E5E1D9 !important;
+    border-bottom: 1px solid #30302D !important;
     padding-bottom: 0.75rem;
     margin-bottom: 1.25rem;
     display: flex;
@@ -505,139 +503,126 @@ a.btn-danger:active {
 }
 
 /* ==========================================================================
-   Clean Input Fields (Neutral Focus Ring, No Orange Halos)
+   Input Fields (#202224, Border #30302D)
    ========================================================================== */
 .form-control-dark,
 .form-select-dark {
-    background-color: #0b0e14 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
-    border-radius: 8px !important;
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #E5E1D9 !important;
+    border-radius: 6px !important;
     padding: 0.7rem 1rem !important;
     font-size: 0.92rem !important;
-    box-shadow: none !important;
     outline: none !important;
-    transition: border-color 0.2s ease !important;
+    transition: border-color 0.15s ease !important;
 }
 
 .form-control-dark::placeholder {
-    color: #64748b !important;
+    color: #737069 !important;
 }
 
 .form-control-dark:focus,
 .form-select-dark:focus {
-    background-color: #0d1117 !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    box-shadow: none !important;
+    background-color: #202224 !important;
+    border-color: #D6B77A !important;
+    color: #E5E1D9 !important;
     outline: none !important;
-    color: #ffffff !important;
 }
 
 .form-select-dark option {
-    background-color: #0e1118;
-    color: #f8fafc;
+    background-color: #17191B !important;
+    color: #E5E1D9 !important;
 }
 
 .input-group-text-dark {
-    background-color: #0b0e14 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
     border-right: none !important;
-    color: var(--text-secondary) !important;
-    box-shadow: none !important;
+    color: #D6B77A !important;
 }
 
 /* ==========================================================================
-   Cuisine Badges (Flat Surface, No Box-Shadow)
+   Cuisine Badges (#202224 default, #C58A36 active)
    ========================================================================== */
 .cuisine-badge {
     cursor: pointer;
     font-size: 0.82rem;
     padding: 6px 14px;
     border-radius: 20px;
-    border: 1px solid var(--border-neutral) !important;
-    background-color: rgba(255, 255, 255, 0.03) !important;
-    color: var(--text-secondary);
-    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    border: 1px solid #30302D !important;
+    background-color: #202224 !important;
+    color: #A6A29A !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     user-select: none;
     display: inline-block;
     margin: 3px;
-    box-shadow: none !important;
-    filter: none !important;
 }
 
 .cuisine-badge:hover {
-    border-color: rgba(255, 255, 255, 0.22) !important;
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.06) !important;
-    box-shadow: none !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    background-color: #282a2d !important;
 }
 
 .cuisine-badge.active {
-    background: rgba(245, 158, 11, 0.15) !important;
-    color: var(--amber-light) !important;
-    border-color: rgba(245, 158, 11, 0.35) !important;
-    font-weight: 600;
-    box-shadow: none !important;
-    filter: none !important;
+    background: #C58A36 !important;
+    color: #090B0D !important;
+    border-color: #C58A36 !important;
+    font-weight: 700 !important;
 }
 
 /* ==========================================================================
-   Result Cards (Flat Dark Surface, Subtle Hover)
+   Result Cards (#17191B, Borders #30302D)
    ========================================================================== */
 .result-card-dark {
-    background: #0f131a !important;
-    border-radius: 16px;
-    border: 1px solid var(--border-neutral) !important;
-    box-shadow: none !important;
-    filter: none !important;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    background: #17191B !important;
+    border-radius: 12px;
+    border: 1px solid #30302D !important;
+    transition: border-color 0.15s ease;
     overflow: hidden;
 }
 
 .result-card-dark:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.15) !important;
-    box-shadow: none !important;
+    border-color: #454540 !important;
+    transform: none !important;
 }
 
-/* Clean Solid Score Badges (Zero Box-Shadow) */
+/* Clean Solid Score Badges */
 .score-badge-circle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     font-weight: 800;
-    font-size: 1rem;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: none !important;
-    filter: none !important;
+    font-size: 0.95rem;
+    color: #E5E1D9;
+    border: 1px solid #30302D !important;
 }
 
 .score-high {
-    background: #059669 !important;
-    border-color: rgba(16, 185, 129, 0.4) !important;
-    box-shadow: none !important;
+    background: #234333 !important;
+    border-color: #3b6d54 !important;
+    color: #a3d9bc !important;
 }
 
 .score-medium {
-    background: #d97706 !important;
-    border-color: rgba(245, 158, 11, 0.4) !important;
-    box-shadow: none !important;
+    background: #473318 !important;
+    border-color: #7d5725 !important;
+    color: #D6B77A !important;
 }
 
 .score-low {
-    background: #475569 !important;
-    border-color: rgba(100, 116, 139, 0.4) !important;
-    box-shadow: none !important;
+    background: #202224 !important;
+    border-color: #30302D !important;
+    color: #A6A29A !important;
 }
 
 .rating-star-badge-dark {
-    background-color: rgba(16, 185, 129, 0.12) !important;
-    border: 1px solid rgba(16, 185, 129, 0.25) !important;
-    color: #34d399 !important;
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
     font-weight: 700;
     font-size: 0.85rem;
     padding: 3px 8px;
@@ -645,43 +630,112 @@ a.btn-danger:active {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    box-shadow: none !important;
 }
 
 .explanation-tag-dark {
-    background-color: rgba(255, 255, 255, 0.04) !important;
-    color: #e2e8f0 !important;
-    border: 1px solid var(--border-neutral) !important;
-    border-radius: 12px;
+    background-color: #202224 !important;
+    color: #E5E1D9 !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
     padding: 3px 10px;
     font-size: 0.77rem;
     font-weight: 500;
     display: inline-block;
     margin: 2px 4px 2px 0;
-    box-shadow: none !important;
 }
 
 /* ==========================================================================
-   Footer
+   Editorial Color Overrides for Utility Classes
+   ========================================================================== */
+.text-warning,
+.bi-star-fill.text-warning,
+.bi-star-half.text-warning,
+.bi-compass-fill.text-warning,
+.bi-geo-alt-fill.text-warning,
+.bi-wallet2.text-warning,
+.bi-cpu-fill.text-warning,
+.bi-lightbulb-fill.text-warning,
+.bi-award.text-warning,
+.bi-globe2.text-warning,
+.bi-stars.text-warning {
+    color: #D6B77A !important;
+}
+
+.text-danger {
+    color: #C58A36 !important;
+}
+
+.text-success {
+    color: #8cb89f !important;
+}
+
+.text-light,
+.text-white {
+    color: #E5E1D9 !important;
+}
+
+.text-secondary,
+.text-muted {
+    color: #A6A29A !important;
+}
+
+.bg-warning {
+    background-color: #C58A36 !important;
+    color: #090B0D !important;
+}
+
+.bg-danger {
+    background-color: #C58A36 !important;
+    color: #090B0D !important;
+}
+
+.bg-secondary {
+    background-color: #202224 !important;
+    color: #E5E1D9 !important;
+    border: 1px solid #30302D !important;
+}
+
+.bg-dark {
+    background-color: #17191B !important;
+    border-color: #30302D !important;
+}
+
+.bg-light {
+    background-color: #202224 !important;
+}
+
+.border-secondary {
+    border-color: #30302D !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #30302D !important;
+}
+
+.border-top {
+    border-top: 1px solid #30302D !important;
+}
+
+/* ==========================================================================
+   Footer (#090B0D, Border #30302D)
    ========================================================================== */
 .footer-dark {
-    background-color: #06080b !important;
-    border-top: 1px solid var(--border-neutral) !important;
-    color: var(--text-muted);
+    background-color: #090B0D !important;
+    border-top: 1px solid #30302D !important;
+    color: #A6A29A !important;
     padding: 2.5rem 0 2rem;
     font-size: 0.88rem;
     margin-top: 5rem;
-    box-shadow: none !important;
 }
 
 .footer-dark a {
-    color: var(--text-secondary);
+    color: #A6A29A !important;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
 }
 
 .footer-dark a:hover {
-    color: #ffffff;
+    color: #D6B77A !important;
 }
 
 /* Scrollbar */
@@ -691,14 +745,15 @@ a.btn-danger:active {
 }
 
 ::-webkit-scrollbar-track {
-    background: #080a0e;
+    background: #090B0D;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1a1e27;
+    background: #202224;
+    border: 1px solid #30302D;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #2a3140;
+    background: #30302D;
 }
