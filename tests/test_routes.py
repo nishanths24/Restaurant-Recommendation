@@ -22,11 +22,35 @@ def test_index_page(client):
     assert b"DineMind" in res.data
     assert b"Preferred Cuisines" in res.data
     assert b"Destination & Locality" in res.data
+    assert b"Discover restaurants" in res.data
+    assert b"9,551" in res.data
+
+def test_find_page(client):
+    res = client.get("/find")
+    assert res.status_code == 200
+    assert b"DineMind" in res.data
+    assert b"Preferred Cuisines" in res.data
+
+def test_explore_page(client):
+    res = client.get("/explore")
+    assert res.status_code == 200
+    assert b"Explore Verified Restaurants" in res.data
+
+def test_explore_page_filtered(client):
+    res = client.get("/explore?city=New+Delhi&rating=4.0")
+    assert res.status_code == 200
+    assert b"New Delhi" in res.data
+
+def test_cuisines_page(client):
+    res = client.get("/cuisines")
+    assert res.status_code == 200
+    assert b"Global Cuisines Catalog" in res.data
+    assert b"North Indian" in res.data
 
 def test_about_page(client):
     res = client.get("/about")
     assert res.status_code == 200
-    assert b"Recommendation Methodology" in res.data
+    assert b"Recommendation Methodology" in res.data or b"About DineMind" in res.data
     assert b"Cognifyz Technologies" in res.data
 
 def test_recommend_endpoint_valid_cuisine(client):
@@ -40,15 +64,14 @@ def test_recommend_endpoint_valid_cuisine(client):
     }
     res = client.post("/recommend", data=form_data)
     assert res.status_code == 200
-    assert b"Recommended Dining Options" in res.data
+    assert b"Curated Dining Matches" in res.data or b"Recommended Dining" in res.data
     assert b"North Indian" in res.data
     assert b"WHY RECOMMENDED" in res.data
 
 def test_recommend_endpoint_empty_preferences(client):
     res = client.post("/recommend", data={})
     assert res.status_code == 200
-    assert b"Recommended Dining Options" in res.data
-    assert b"General Top Rated" in res.data
+    assert b"Global Top-Rated" in res.data or b"Top-Rated" in res.data
 
 def test_recommend_endpoint_no_matches(client):
     form_data = {
@@ -57,10 +80,9 @@ def test_recommend_endpoint_no_matches(client):
     }
     res = client.post("/recommend", data=form_data)
     assert res.status_code == 200
-    assert b"No Matching Restaurants Found" in res.data
+    assert b"No Matching Venues Found" in res.data or b"No Matching Restaurants" in res.data
 
 def test_similar_restaurant_endpoint(client):
-    # Fetch first valid restaurant id from health or known dataset
     res = client.get("/similar/6317637")  # Le Petit Souffle
     assert res.status_code in (200, 404)
     if res.status_code == 200:

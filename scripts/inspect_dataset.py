@@ -27,3 +27,4 @@ for r_idx, row in enumerate(sample_rows):
     print(f"\n--- Sample Row {r_idx + 1} ---")
     for col, val in zip(header, row):
         print(f"  {col}: {val}")
+

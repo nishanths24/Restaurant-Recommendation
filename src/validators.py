@@ -129,3 +129,4 @@ def validate_and_normalize_preferences(raw_prefs: Dict[str, Any], available_cuis
     prefs["is_empty"] = not has_any_pref
     
     return prefs
+

@@ -72,3 +72,4 @@ def generate_explanation_tags(row: Dict[str, Any], user_prefs: Dict[str, Any], s
         tags.append(f"Good overall match ({row.get('aggregate_rating', 0.0)}★ in {rest_city})")
         
     return tags
+

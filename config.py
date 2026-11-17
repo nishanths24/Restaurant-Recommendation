@@ -57,3 +57,4 @@ class Config:
         "rating_text": "Rating text",
         "votes": "Votes",
     }
+

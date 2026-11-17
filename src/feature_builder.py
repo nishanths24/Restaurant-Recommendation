@@ -104,3 +104,4 @@ class FeatureBuilder:
             
         results.sort(key=lambda x: (-x["similarity_score"], -x["rating"], x["restaurant_name"]))
         return results[:top_k]
+

@@ -1,101 +1,105 @@
 {% extends "base.html" %}
 
-{% block title %}DineMind - Recommendation Results{% endblock %}
+{% block title %}DineMind — Recommended Dining Results{% endblock %}
 
 {% block content %}
-<!-- Results Header & Active Filter Pills -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom">
-    <div>
-        <h2 class="h3 fw-bold mb-1">
-            <i class="bi bi-stars text-danger me-2"></i>Recommended Dining Options
-        </h2>
-        <p class="text-muted small mb-0">
-            {% if result.is_empty_preferences %}
-                <span class="badge bg-secondary me-1">General Top Rated</span>
-                Showing top-rated restaurants across the dataset (no specific filters selected).
-            {% else %}
-                Ranked using DineMind multi-criteria content scoring (Cuisine, Location, Budget, Rating).
+<div class="container py-4">
+    <!-- Results Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--border-glass) !important;">
+        <div>
+            <div class="section-subtitle">Recommendation Results</div>
+            <h1 class="font-serif fw-bold text-white mb-1">
+                <i class="bi bi-stars text-warning me-2"></i>Curated Dining Matches
+            </h1>
+            <p class="text-secondary small mb-0">
+                {% if result.is_empty_preferences %}
+                    <span class="badge bg-secondary me-1">Global Top-Rated</span>
+                    Showing top-rated venues overall (no specific filters selected).
+                {% else %}
+                    Ranked by multi-criteria content scoring (Cuisine, Location, Budget, Rating).
+                {% endif %}
+            </p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <a href="{{ url_for('find_page') }}" class="btn btn-pill-secondary">
+                <i class="bi bi-sliders me-1"></i> Edit Preferences
+            </a>
+        </div>
+    </div>
+
+    <!-- Active Criteria Pill Bar -->
+    <div class="glass-panel p-3 mb-4">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="text-secondary small fw-semibold me-1"><i class="bi bi-filter me-1"></i>Criteria:</span>
+            
+            {% if result.preferences.cuisines %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-egg-fried text-warning me-1"></i>{{ result.preferences.cuisines | join(', ') }}
+                </span>
             {% endif %}
-        </p>
+            
+            {% if result.preferences.city %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-geo-alt-fill text-warning me-1"></i>{{ result.preferences.city }}
+                    {% if result.preferences.locality %}({{ result.preferences.locality }}){% endif %}
+                </span>
+            {% endif %}
+            
+            {% if result.preferences.price_range %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-wallet2 text-warning me-1"></i>Tier {{ result.preferences.price_range }} / 4
+                </span>
+            {% endif %}
+            
+            {% if result.preferences.max_cost %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-cash text-warning me-1"></i>Max {{ result.preferences.max_cost }}
+                </span>
+            {% endif %}
+            
+            {% if result.preferences.min_rating > 0 %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-star-fill text-warning me-1"></i>&ge; {{ result.preferences.min_rating }}★
+                </span>
+            {% endif %}
+
+            {% if result.preferences.online_delivery is not none %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-truck text-warning me-1"></i>Delivery: {{ 'Yes' if result.preferences.online_delivery == 1 else 'No' }}
+                </span>
+            {% endif %}
+
+            {% if result.preferences.table_booking is not none %}
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill">
+                    <i class="bi bi-calendar-check text-warning me-1"></i>Booking: {{ 'Yes' if result.preferences.table_booking == 1 else 'No' }}
+                </span>
+            {% endif %}
+
+            {% if result.is_empty_preferences %}
+                <span class="badge bg-dark border border-secondary text-secondary px-3 py-2 rounded-pill">
+                    Unconstrained (All Venues Evaluated)
+                </span>
+            {% endif %}
+
+            <span class="badge bg-warning text-dark fw-bold ms-auto px-3 py-2 rounded-pill">
+                {{ result.returned_count }} / {{ result.total_candidates }} Matches Found
+            </span>
+        </div>
     </div>
-    <div class="mt-2 mt-md-0">
-        <a href="{{ url_for('index') }}" class="btn btn-outline-danger">
-            <i class="bi bi-sliders me-1"></i> Edit Preferences
-        </a>
-    </div>
-</div>
 
-<!-- Active Criteria Summary Bar -->
-<div class="card bg-light border-0 shadow-sm p-3 mb-4">
-    <div class="d-flex flex-wrap align-items-center gap-2">
-        <span class="fw-semibold text-secondary small me-1">Active Criteria:</span>
-        
-        {% if result.preferences.cuisines %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-egg-fried text-danger me-1"></i>Cuisines: {{ result.preferences.cuisines | join(', ') }}
-            </span>
-        {% endif %}
-        
-        {% if result.preferences.city %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-geo-alt text-danger me-1"></i>City: {{ result.preferences.city }}
-                {% if result.preferences.locality %}({{ result.preferences.locality }}){% endif %}
-            </span>
-        {% endif %}
-        
-        {% if result.preferences.price_range %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-wallet2 text-danger me-1"></i>Tier: {{ result.preferences.price_range }} / 4
-            </span>
-        {% endif %}
-        
-        {% if result.preferences.max_cost %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-cash text-danger me-1"></i>Max Cost: {{ result.preferences.max_cost }}
-            </span>
-        {% endif %}
-        
-        {% if result.preferences.min_rating > 0 %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-star text-warning me-1"></i>Min Rating: {{ result.preferences.min_rating }}★
-            </span>
-        {% endif %}
-
-        {% if result.preferences.online_delivery is not none %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-truck text-danger me-1"></i>Delivery: {{ 'Yes' if result.preferences.online_delivery == 1 else 'No' }}
-            </span>
-        {% endif %}
-
-        {% if result.preferences.table_booking is not none %}
-            <span class="badge bg-white text-dark border">
-                <i class="bi bi-calendar-check text-danger me-1"></i>Table Booking: {{ 'Yes' if result.preferences.table_booking == 1 else 'No' }}
-            </span>
-        {% endif %}
-
-        {% if result.is_empty_preferences %}
-            <span class="badge bg-secondary text-white">None (All Venues Considered)</span>
-        {% endif %}
-
-        <span class="badge bg-danger text-white ms-auto">
-            {{ result.returned_count }} / {{ result.total_candidates }} Matches Found
-        </span>
-    </div>
-</div>
-
-<!-- Results State Handling -->
-{% if result.status == 'no_results' or result.returned_count == 0 %}
     <!-- Empty State -->
-    <div class="card border-0 shadow-sm text-center py-5 my-4">
-        <div class="card-body">
-            <i class="bi bi-search text-muted display-3 mb-3"></i>
-            <h4 class="fw-bold">No Matching Restaurants Found</h4>
-            <p class="text-muted col-md-6 mx-auto mb-4">
+    {% if result.status == 'no_results' or result.returned_count == 0 %}
+        <div class="glass-panel text-center py-5 my-4 p-4">
+            <i class="bi bi-search text-warning display-3 mb-3 d-inline-block"></i>
+            <h3 class="font-serif fw-bold text-white mb-2">No Matching Venues Found</h3>
+            <p class="text-secondary col-md-7 mx-auto mb-4">
                 {{ result.message }}
             </p>
             {% if result.applied_constraints %}
-                <div class="col-md-6 mx-auto text-start bg-light p-3 rounded mb-4">
-                    <h6 class="fw-bold text-danger mb-2"><i class="bi bi-exclamation-triangle me-1"></i> Enforced Constraints:</h6>
+                <div class="col-md-6 mx-auto text-start p-3 rounded mb-4" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                    <h6 class="fw-bold text-warning mb-2 small text-uppercase">
+                        <i class="bi bi-exclamation-triangle me-1"></i> Enforced Boundaries:
+                    </h6>
                     <ul class="mb-0 small text-secondary">
                         {% for c in result.applied_constraints %}
                             <li>{{ c }}</li>
@@ -103,136 +107,138 @@
                     </ul>
                 </div>
             {% endif %}
-            <a href="{{ url_for('index') }}" class="btn btn-danger px-4">
-                <i class="bi bi-arrow-left me-1"></i> Adjust & Relax Filters
+            <a href="{{ url_for('find_page') }}" class="btn btn-pill-primary px-4">
+                <i class="bi bi-arrow-repeat me-1"></i> Relax Filters & Try Again
             </a>
         </div>
-    </div>
-{% else %}
-    <!-- List of Recommended Restaurants -->
-    <div class="row">
-        {% for r in result.recommendations %}
-            <div class="col-lg-6 mb-4">
-                <div class="result-card p-3 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <!-- Card Header: Title & Match Score -->
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="pe-2">
-                                <span class="badge bg-light text-secondary border small mb-1">#{{ loop.index }}</span>
-                                <h5 class="fw-bold text-dark mb-0">{{ r.restaurant_name }}</h5>
-                                <div class="text-muted small mt-1">
-                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i>
-                                    <strong>{{ r.locality_clean }}</strong>, {{ r.city_clean }}
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <div class="score-badge-circle {% if r.match_score >= 80 %}score-high{% elif r.match_score >= 50 %}score-medium{% else %}score-low{% endif %}">
-                                    {{ r.match_score | round | int }}%
-                                </div>
-                                <div class="text-muted" style="font-size: 0.68rem; font-weight: 600; text-transform: uppercase;">Match</div>
-                            </div>
-                        </div>
-
-                        <!-- Address -->
-                        <p class="text-secondary small mb-2 text-truncate" title="{{ r.address }}">
-                            <i class="bi bi-signpost-2 me-1"></i>{{ r.address }}
-                        </p>
-
-                        <!-- Cuisines -->
-                        <div class="mb-2">
-                            {% for c in r.cuisines_clean.split(',') %}
-                                <span class="badge bg-light text-dark border me-1 mb-1 font-monospace" style="font-size: 0.76rem;">
-                                    {{ c.strip() }}
-                                </span>
-                            {% endfor %}
-                        </div>
-
-                        <!-- Key Metrics Row -->
-                        <div class="row g-2 py-2 my-1 border-top border-bottom bg-light rounded text-center small">
-                            <div class="col-4">
-                                <div class="text-muted" style="font-size: 0.72rem;">RATING</div>
-                                {% if r.is_rated %}
-                                    <span class="rating-star-badge" style="background-color: {{ r.rating_color.lower().replace(' ', '') if r.rating_color else '#2e7d32' }};">
-                                        <i class="bi bi-star-fill small"></i> {{ r.aggregate_rating }}
+    {% else %}
+        <!-- Recommendation Result Cards -->
+        <div class="row">
+            {% for r in result.recommendations %}
+                <div class="col-lg-6 mb-4">
+                    <div class="result-card-dark p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- Card Header: Title & Match Score -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div class="pe-3">
+                                    <span class="badge bg-dark border border-secondary text-secondary small mb-1">
+                                        #{{ loop.index }} MATCH
                                     </span>
-                                    <div class="text-muted" style="font-size: 0.68rem;">{{ r.votes }} votes</div>
-                                {% else %}
-                                    <span class="badge bg-secondary">Unrated</span>
-                                {% endif %}
+                                    <h4 class="font-serif fw-bold text-white mb-1">{{ r.restaurant_name }}</h4>
+                                    <div class="text-secondary small">
+                                        <i class="bi bi-geo-alt-fill text-warning me-1"></i>
+                                        <strong class="text-light">{{ r.locality_clean }}</strong>, {{ r.city_clean }}
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="score-badge-circle {% if r.match_score >= 80 %}score-high{% elif r.match_score >= 50 %}score-medium{% else %}score-low{% endif %}">
+                                        {{ r.match_score | round | int }}%
+                                    </div>
+                                    <div class="text-muted" style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase;">Match</div>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <div class="text-muted" style="font-size: 0.72rem;">PRICE TIER</div>
-                                <span class="fw-bold text-dark">
-                                    {% for _ in range(r.price_range) %}${% endfor %}
-                                    <span class="text-muted">{% for _ in range(4 - r.price_range) %}${% endfor %}</span>
-                                </span>
-                                <div class="text-muted" style="font-size: 0.68rem;">Tier {{ r.price_range }} of 4</div>
-                            </div>
-                            <div class="col-4">
-                                <div class="text-muted" style="font-size: 0.72rem;">COST FOR TWO</div>
-                                <span class="fw-bold text-dark">
-                                    {% if r.cost_for_two > 0 %}
-                                        {{ r.currency.split('(')[0] }} {{ r.cost_for_two | int }}
-                                    {% else %}
-                                        N/A
-                                    {% endif %}
-                                </span>
-                                <div class="text-muted" style="font-size: 0.68rem;">approx.</div>
-                            </div>
-                        </div>
 
-                        <!-- Service Flags -->
-                        <div class="d-flex gap-2 my-2 small">
-                            {% if r.has_online_delivery %}
-                                <span class="badge bg-success-subtle text-success border border-success-subtle">
-                                    <i class="bi bi-check-circle me-1"></i>Online Delivery
-                                </span>
-                            {% else %}
-                                <span class="badge bg-light text-muted border">
-                                    <i class="bi bi-x-circle me-1"></i>No Delivery
-                                </span>
-                            {% endif %}
+                            <!-- Address -->
+                            <p class="text-muted small mb-3 text-truncate" title="{{ r.address }}">
+                                <i class="bi bi-signpost-2 me-1"></i>{{ r.address }}
+                            </p>
 
-                            {% if r.has_table_booking %}
-                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">
-                                    <i class="bi bi-calendar2-check me-1"></i>Table Booking
-                                </span>
-                            {% endif %}
-                        </div>
-
-                        <!-- Factual Explanation Tags -->
-                        <div class="mt-2 pt-2 border-top">
-                            <div class="fw-semibold text-secondary mb-1" style="font-size: 0.75rem;">
-                                <i class="bi bi-lightbulb-fill text-warning me-1"></i>WHY RECOMMENDED:
-                            </div>
-                            <div>
-                                {% for tag in r.explanations %}
-                                    <span class="explanation-tag">
-                                        <i class="bi bi-check-lg me-1 text-success"></i>{{ tag }}
+                            <!-- Cuisine Tags -->
+                            <div class="mb-3">
+                                {% for c in r.cuisines_clean.split(',') %}
+                                    <span class="badge bg-dark text-light border border-secondary border-opacity-50 me-1 mb-1 font-monospace" style="font-size: 0.76rem;">
+                                        {{ c.strip() }}
                                     </span>
                                 {% endfor %}
                             </div>
+
+                            <!-- Metrics Strip -->
+                            <div class="row g-2 py-2 my-2 rounded text-center small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                                <div class="col-4">
+                                    <div class="text-muted" style="font-size: 0.7rem;">RATING</div>
+                                    {% if r.is_rated %}
+                                        <span class="rating-star-badge-dark">
+                                            <i class="bi bi-star-fill small"></i> {{ r.aggregate_rating }}
+                                        </span>
+                                        <div class="text-muted" style="font-size: 0.68rem;">{{ r.votes }} votes</div>
+                                    {% else %}
+                                        <span class="badge bg-secondary text-white">Unrated</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-muted" style="font-size: 0.7rem;">PRICE TIER</div>
+                                    <span class="fw-bold text-warning">
+                                        {% for _ in range(r.price_range) %}${% endfor %}
+                                        <span class="text-muted">{% for _ in range(4 - r.price_range) %}${% endfor %}</span>
+                                    </span>
+                                    <div class="text-muted" style="font-size: 0.68rem;">Tier {{ r.price_range }} of 4</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-muted" style="font-size: 0.7rem;">COST FOR TWO</div>
+                                    <span class="fw-bold text-white">
+                                        {% if r.cost_for_two > 0 %}
+                                            {{ r.currency.split('(')[0] }} {{ r.cost_for_two | int }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </span>
+                                    <div class="text-muted" style="font-size: 0.68rem;">approx.</div>
+                                </div>
+                            </div>
+
+                            <!-- Delivery & Booking Flags -->
+                            <div class="d-flex gap-2 my-2 small">
+                                {% if r.has_online_delivery %}
+                                    <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-40">
+                                        <i class="bi bi-check-circle me-1"></i>Online Delivery
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-dark text-muted border border-secondary border-opacity-25">
+                                        <i class="bi bi-x-circle me-1"></i>No Delivery
+                                    </span>
+                                {% endif %}
+
+                                {% if r.has_table_booking %}
+                                    <span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-40">
+                                        <i class="bi bi-calendar2-check me-1"></i>Table Booking
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            <!-- Factual Explanations -->
+                            <div class="mt-3 pt-2 border-top" style="border-color: var(--border-glass) !important;">
+                                <div class="text-warning small fw-bold mb-1" style="font-size: 0.72rem; letter-spacing: 1px;">
+                                    <i class="bi bi-lightbulb-fill me-1"></i>WHY RECOMMENDED:
+                                </div>
+                                <div>
+                                    {% for tag in r.explanations %}
+                                        <span class="explanation-tag-dark">
+                                            <i class="bi bi-check2 me-1 text-warning"></i>{{ tag }}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer: Similar Venues Link -->
+                        <div class="mt-3 pt-3 text-end border-top" style="border-color: var(--border-glass) !important;">
+                            <a href="{{ url_for('similar', restaurant_id=r.restaurant_id) }}" class="btn btn-sm btn-pill-secondary py-1 px-3" style="font-size: 0.82rem;">
+                                <i class="bi bi-diagram-3 me-1"></i> Similar Venues
+                            </a>
                         </div>
                     </div>
-
-                    <!-- Card Footer: Similar Restaurants Link -->
-                    <div class="mt-3 pt-2 text-end border-top">
-                        <a href="{{ url_for('similar', restaurant_id=r.restaurant_id) }}" class="btn btn-sm btn-outline-secondary">
-                            <i class="bi bi-diagram-3 me-1"></i> Find Similar Venues
-                        </a>
-                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 
-    <!-- Bottom Action Bar -->
-    <div class="text-center my-4 py-3 bg-light rounded-3">
-        <p class="text-muted mb-2">Want to try a different location, cuisine, or budget?</p>
-        <a href="{{ url_for('index') }}" class="btn btn-danger px-4">
-            <i class="bi bi-arrow-repeat me-1"></i> Modify Search Preferences
-        </a>
-    </div>
-{% endif %}
-
+        <!-- Bottom Action Bar -->
+        <div class="text-center my-4 py-4 glass-panel">
+            <h5 class="font-serif fw-bold text-white mb-2">Want to refine your culinary exploration?</h5>
+            <p class="text-secondary small mb-3">Adjust your cuisine preferences, location, or price tier to explore other options.</p>
+            <a href="{{ url_for('find_page') }}" class="btn btn-pill-primary px-4">
+                <i class="bi bi-sliders me-1"></i> Modify Search Preferences
+            </a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -70,3 +70,4 @@ def test_preprocess_dataframe(sample_raw_dataframe):
     curry_row = df_clean[df_clean["restaurant_name"] == "Curry Express"].iloc[0]
     assert curry_row["city_clean"] == "Brasilia"
     assert curry_row["cuisines_clean"] == "Not Specified"
+

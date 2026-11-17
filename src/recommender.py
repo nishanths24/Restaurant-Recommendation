@@ -320,3 +320,4 @@ class RestaurantRecommender:
     def get_similar_restaurants(self, restaurant_id: int, top_k: int = 5) -> List[Dict[str, Any]]:
         """Secondary feature: content-based restaurant-to-restaurant similarity."""
         return self.feature_builder.compute_restaurant_similarity(self.df, restaurant_id, top_k=top_k)
+

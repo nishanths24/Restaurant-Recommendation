@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}DineMind — Explore Verified Restaurants{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--border-glass) !important;">
+        <div>
+            <div class="section-subtitle">Venue Directory</div>
+            <h1 class="font-serif fw-bold text-white mb-1">
+                <i class="bi bi-compass-fill text-warning me-2"></i>Explore Verified Restaurants
+            </h1>
+            <p class="text-secondary small mb-0">
+                Browse through 9,551 authentic dining locations across 140 global cities from the Cognifyz dataset.
+            </p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <a href="{{ url_for('find_page') }}" class="btn btn-pill-primary">
+                <i class="bi bi-stars me-1"></i> Personalize My Search
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="glass-panel p-4 mb-4">
+        <form method="GET" action="{{ url_for('explore_page') }}" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="city" class="form-label text-secondary small fw-semibold">Filter by City</label>
+                <select name="city" id="city" class="form-select form-select-dark">
+                    <option value="">All Cities ({{ cities|length }})</option>
+                    {% for c in cities %}
+                        <option value="{{ c }}" {% if selected_city == c %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-md-3">
+                <label for="rating" class="form-label text-secondary small fw-semibold">Minimum Rating</label>
+                <select name="rating" id="rating" class="form-select form-select-dark">
+                    <option value="0.0">Any Rating</option>
+                    <option value="4.5" {% if selected_rating == 4.5 %}selected{% endif %}>4.5+ ★ (Excellent)</option>
+                    <option value="4.0" {% if selected_rating == 4.0 %}selected{% endif %}>4.0+ ★ (Very Good)</option>
+                    <option value="3.5" {% if selected_rating == 3.5 %}selected{% endif %}>3.5+ ★ (Good)</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="q" class="form-label text-secondary small fw-semibold">Cuisine / Restaurant Name</label>
+                <input type="text" name="q" id="q" class="form-control form-control-dark" placeholder="e.g. Italian, Cafe, Pizza..." value="{{ search_query or '' }}">
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-pill-primary w-100 py-2">
+                    <i class="bi bi-filter"></i> Apply
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Active Filter Indicator -->
+    <div class="d-flex justify-content-between align-items-center mb-3 text-secondary small">
+        <div>
+            Showing <strong>{{ restaurants|length }}</strong> curated venues
+            {% if selected_city %} in <span class="text-warning fw-semibold">{{ selected_city }}</span>{% endif %}
+            {% if selected_rating > 0 %} with rating &ge; <span class="text-warning fw-semibold">{{ selected_rating }}★</span>{% endif %}
+            {% if search_query %} matching "<span class="text-warning fw-semibold">{{ search_query }}</span>"{% endif %}
+        </div>
+        <a href="{{ url_for('explore_page') }}" class="text-decoration-none text-muted small">
+            <i class="bi bi-x-circle me-1"></i> Clear Filters
+        </a>
+    </div>
+
+    <!-- Restaurant Cards Grid -->
+    <div class="row g-4">
+        {% for r in restaurants %}
+            <div class="col-md-6 col-lg-4">
+                <div class="result-card-dark p-3 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h5 class="font-serif fw-bold text-white mb-0 text-truncate" style="max-width: 230px;" title="{{ r.restaurant_name }}">
+                                    {{ r.restaurant_name }}
+                                </h5>
+                                <div class="text-secondary small mt-1">
+                                    <i class="bi bi-geo-alt-fill text-warning me-1"></i>
+                                    {{ r.locality_clean }}, {{ r.city_clean }}
+                                </div>
+                            </div>
+                            <div>
+                                {% if r.is_rated %}
+                                    <span class="rating-star-badge-dark">
+                                        <i class="bi bi-star-fill small"></i> {{ r.aggregate_rating }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary text-white small">Unrated</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Cuisines -->
+                        <div class="mb-2">
+                            {% for c in r.cuisines_clean.split(',')[:3] %}
+                                <span class="badge bg-dark border border-secondary border-opacity-50 text-light me-1 mb-1 font-monospace" style="font-size: 0.72rem;">
+                                    {{ c.strip() }}
+                                </span>
+                            {% endfor %}
+                            {% if r.cuisines_clean.split(',')|length > 3 %}
+                                <span class="badge bg-dark text-muted" style="font-size: 0.7rem;">+{{ r.cuisines_clean.split(',')|length - 3 }} more</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Details Row -->
+                        <div class="d-flex justify-content-between align-items-center py-2 border-top border-bottom my-2 small" style="border-color: var(--border-glass) !important;">
+                            <span class="text-secondary">
+                                Price: <strong class="text-warning">{% for _ in range(r.price_range) %}${% endfor %}</strong>
+                            </span>
+                            <span class="text-secondary">
+                                Cost: <strong class="text-light">{{ r.currency.split('(')[0] }} {{ r.cost_for_two | int }}</strong>
+                            </span>
+                            <span class="text-muted" style="font-size: 0.75rem;">
+                                {{ r.votes }} votes
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color: var(--border-glass) !important;">
+                        <a href="{{ url_for('similar', restaurant_id=r.restaurant_id) }}" class="btn btn-sm btn-pill-secondary py-1 px-3" style="font-size: 0.8rem;">
+                            <i class="bi bi-diagram-3 me-1"></i> Similar Venues
+                        </a>
+                        <form action="{{ url_for('recommend') }}" method="POST" class="d-inline">
+                            <input type="hidden" name="cuisines" value="{{ r.cuisines_clean.split(',')[0] }}">
+                            <input type="hidden" name="city" value="{{ r.city_clean }}">
+                            <button type="submit" class="btn btn-sm btn-outline-warning rounded-pill py-1 px-2" style="font-size: 0.78rem;">
+                                Taste Profile &rarr;
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

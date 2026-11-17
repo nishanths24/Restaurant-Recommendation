@@ -46,6 +46,73 @@ def create_app(config_class=Config):
         options = app.recommender.get_filter_options()
         return render_template("index.html", options=options, active_page="home")
 
+    @app.route("/find", methods=["GET"])
+    def find_page():
+        if app.recommender is None:
+            abort(500)
+        options = app.recommender.get_filter_options()
+        return render_template("find.html", options=options, active_page="find")
+
+    @app.route("/explore", methods=["GET"])
+    def explore_page():
+        if app.df is None or app.recommender is None:
+            abort(500)
+            
+        city = request.args.get("city", "").strip()
+        rating_str = request.args.get("rating", "0.0").strip()
+        q = request.args.get("q", "").strip().lower()
+        
+        try:
+            min_rating = float(rating_str)
+        except ValueError:
+            min_rating = 0.0
+            
+        sub_df = app.df.copy()
+        
+        if city:
+            sub_df = sub_df[sub_df["city_clean"].str.lower() == city.lower()]
+            
+        if min_rating > 0:
+            sub_df = sub_df[sub_df["aggregate_rating"] >= min_rating]
+            
+        if q:
+            name_match = sub_df["restaurant_name"].str.lower().str.contains(q, na=False)
+            cuisine_match = sub_df["cuisines_clean"].str.lower().str.contains(q, na=False)
+            sub_df = sub_df[name_match | cuisine_match]
+            
+        # Sort by rating and votes
+        sub_df = sub_df.sort_values(by=["aggregate_rating", "votes"], ascending=[False, False])
+        sample_venues = sub_df.head(30).to_dict(orient="records")
+        
+        return render_template(
+            "explore.html",
+            restaurants=sample_venues,
+            cities=app.recommender.available_cities,
+            selected_city=city,
+            selected_rating=min_rating,
+            search_query=q,
+            active_page="explore"
+        )
+
+    @app.route("/cuisines", methods=["GET"])
+    def cuisines_page():
+        if app.df is None or app.recommender is None:
+            abort(500)
+            
+        # Compute count per cuisine
+        cuisine_counts = {}
+        for c_str in app.df["cuisines_clean"].dropna():
+            parts = [p.strip() for p in c_str.split(",") if p.strip() and p.strip() != "Not Specified"]
+            for part in parts:
+                cuisine_counts[part] = cuisine_counts.get(part, 0) + 1
+                
+        sorted_cuisines = [
+            {"name": k, "count": v}
+            for k, v in sorted(cuisine_counts.items(), key=lambda x: -x[1])
+        ]
+        
+        return render_template("cuisines.html", cuisine_data=sorted_cuisines, active_page="cuisines")
+
     @app.route("/recommend", methods=["POST"])
     def recommend():
         if app.recommender is None:
@@ -67,7 +134,7 @@ def create_app(config_class=Config):
         }
         
         result = app.recommender.recommend(raw_prefs)
-        return render_template("results.html", result=result, active_page="home")
+        return render_template("results.html", result=result, active_page="find")
 
     @app.route("/similar/<int:restaurant_id>", methods=["GET"])
     def similar(restaurant_id):
@@ -90,7 +157,7 @@ def create_app(config_class=Config):
             "similar.html",
             target=target_venue,
             similar_results=similar_venues,
-            active_page="home"
+            active_page="find"
         )
 
     @app.route("/about", methods=["GET"])

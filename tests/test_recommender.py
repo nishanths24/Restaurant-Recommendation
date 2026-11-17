@@ -92,3 +92,4 @@ def test_item_similarity(recommender):
     similars = recommender.get_similar_restaurants(101, top_k=2)
     assert isinstance(similars, list)
     assert len(similars) <= 2
+

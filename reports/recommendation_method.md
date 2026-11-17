@@ -104,3 +104,4 @@ Every recommendation produces factual, auditable justification tags derived stri
 5. Delivery and booking confirmations.
 
 No vague or fabricated claims (e.g., "Trending near you" or "Allergy safe") are ever generated.
+

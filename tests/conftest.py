@@ -30,3 +30,4 @@ def sample_raw_dataframe():
         "Votes": [450, 210, 0, "bad_votes", 15],
     }
     return pd.DataFrame(data)
+

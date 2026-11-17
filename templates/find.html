@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}DineMind — Find Restaurants by Preferences{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="mb-4 pb-3 border-bottom text-center" style="border-color: var(--border-glass) !important;">
+        <div class="section-subtitle">Tailored Recommendation Engine</div>
+        <h1 class="font-serif fw-bold text-white mb-2">Find Your Perfect Dining Venue</h1>
+        <p class="text-secondary col-md-7 mx-auto small">
+            Specify your cuisines, location, budget ceiling, and minimum rating. 
+            DineMind will compute content similarity scores across 9,551 verified venues.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="glass-panel p-4 p-md-5">
+                <form action="{{ url_for('recommend') }}" method="POST" id="preference-form">
+                    
+                    <!-- Section 1: Cuisine Preferences -->
+                    <div class="mb-4 pb-3">
+                        <div class="form-section-title-dark">
+                            <i class="bi bi-egg-fried text-warning"></i>
+                            <span>Preferred Cuisines</span>
+                            <span class="badge bg-dark border border-secondary text-secondary ms-auto small">Multi-select supported</span>
+                        </div>
+                        <p class="text-secondary small mb-3">
+                            Click popular cuisine tags or type specific cuisines separated by commas:
+                        </p>
+                        <div class="mb-3" id="quick-cuisine-tags">
+                            {% set popular_cuisines = [
+                                'North Indian', 'Chinese', 'Fast Food', 'Italian', 'Continental', 
+                                'Mughlai', 'Cafe', 'South Indian', 'Desserts', 'Bakery', 
+                                'Street Food', 'Pizza', 'Burger', 'American', 'Asian', 'Thai', 'Mexican'
+                            ] %}
+                            {% for c in popular_cuisines %}
+                                <span class="cuisine-badge" data-cuisine="{{ c }}">
+                                    <i class="bi bi-tag-fill me-1 small"></i>{{ c }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text input-group-text-dark"><i class="bi bi-search"></i></span>
+                            <input type="text" name="cuisines" id="cuisines-input" class="form-control form-control-dark" 
+                                   placeholder="e.g. North Indian, Italian, Chinese (or leave blank for Any)" value="">
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Location -->
+                    <div class="mb-4 pb-3">
+                        <div class="form-section-title-dark">
+                            <i class="bi bi-geo-alt-fill text-warning"></i>
+                            <span>Destination & Locality</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="city-select" class="form-label text-secondary small fw-semibold">City</label>
+                                <select name="city" id="city-select" class="form-select form-select-dark">
+                                    <option value="">Any City (All Locations)</option>
+                                    {% for city in options.cities %}
+                                        <option value="{{ city }}" {% if city == 'New Delhi' %}selected{% endif %}>{{ city }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="locality-select" class="form-label text-secondary small fw-semibold">Locality / Neighborhood</label>
+                                <select name="locality" id="locality-select" class="form-select form-select-dark">
+                                    <option value="">Any Locality in selected city</option>
+                                    {% if 'New Delhi' in options.city_localities %}
+                                        {% for loc in options.city_localities['New Delhi'] %}
+                                            <option value="{{ loc }}">{{ loc }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Budget & Price -->
+                    <div class="mb-4 pb-3">
+                        <div class="form-section-title-dark">
+                            <i class="bi bi-wallet2 text-warning"></i>
+                            <span>Budget & Price Preference</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="price-range-select" class="form-label text-secondary small fw-semibold">Price Tier</label>
+                                <select name="price_range" id="price-range-select" class="form-select form-select-dark">
+                                    <option value="">Any Price Tier</option>
+                                    {% for tier in options.price_tiers %}
+                                        <option value="{{ tier.value }}">{{ tier.label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="text-muted small mt-1">Normalized price tier (1 = Affordable, 4 = Premium).</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="max-cost-input" class="form-label text-secondary small fw-semibold">Max Average Cost for Two (Optional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text input-group-text-dark"><i class="bi bi-cash-stack"></i></span>
+                                    <input type="number" name="max_cost" id="max-cost-input" class="form-control form-control-dark" 
+                                           placeholder="e.g. 1000 (Local Currency)" min="0" step="50">
+                                </div>
+                                <div class="text-muted small mt-1">Leave blank to use price tier or accept any cost.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Rating & Dining Attributes -->
+                    <div class="mb-4 pb-3">
+                        <div class="form-section-title-dark">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span>Quality & Dining Attributes</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="min-rating-select" class="form-label text-secondary small fw-semibold">Minimum Rating</label>
+                                <select name="min_rating" id="min-rating-select" class="form-select form-select-dark">
+                                    {% for r in options.rating_thresholds %}
+                                        <option value="{{ r.value }}" {% if r.value == 3.5 %}selected{% endif %}>{{ r.label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="online-delivery-select" class="form-label text-secondary small fw-semibold">Online Delivery</label>
+                                <select name="online_delivery" id="online-delivery-select" class="form-select form-select-dark">
+                                    <option value="any" selected>Any / Doesn't Matter</option>
+                                    <option value="yes">Yes (Offers Online Delivery)</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="table-booking-select" class="form-label text-secondary small fw-semibold">Table Booking</label>
+                                <select name="table_booking" id="table-booking-select" class="form-select form-select-dark">
+                                    <option value="any" selected>Any / Doesn't Matter</option>
+                                    <option value="yes">Yes (Table Booking Available)</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Filtering Control & Count -->
+                    <div class="mb-4 p-3 rounded-3" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass);">
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-7">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="strict_location" id="strict-location-check" value="true" checked>
+                                    <label class="form-check-label text-white fw-semibold small" for="strict-location-check">
+                                        Strict Location Matching
+                                    </label>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Only show venues located strictly in selected city/locality.</div>
+                                </div>
+                                <div class="form-check form-switch mt-2">
+                                    <input class="form-check-input" type="checkbox" name="strict_budget" id="strict-budget-check" value="true">
+                                    <label class="form-check-label text-white fw-semibold small" for="strict-budget-check">
+                                        Strict Budget Ceiling
+                                    </label>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Exclude venues whose price tier or cost exceeds specified budget.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="top-k-select" class="form-label text-secondary small fw-semibold">Result Count</label>
+                                <select name="top_k" id="top-k-select" class="form-select form-select-dark">
+                                    <option value="5">Top 5 Restaurants</option>
+                                    <option value="10" selected>Top 10 Restaurants (Default)</option>
+                                    <option value="15">Top 15 Restaurants</option>
+                                    <option value="25">Top 25 Restaurants</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dataset Transparency Note -->
+                    <div class="p-3 mb-4 rounded-3 d-flex align-items-start gap-3" style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2);">
+                        <i class="bi bi-shield-check text-warning fs-4 mt-1 flex-shrink-0"></i>
+                        <div class="small text-secondary">
+                            <strong class="text-white">Dataset Integrity Guarantee:</strong>
+                            Dietary tags (Vegetarian, Vegan, Halal, Allergen-safe) and specialized Dining Types (Bar, Cafe, Fine Dining) are absent from the Cognifyz dataset. Per project guidelines, DineMind disables dietary filters rather than fabricating health claims from cuisine labels.
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 justify-content-end align-items-center">
+                        <button type="button" class="btn btn-pill-secondary" id="btn-reset-filters">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-pill-primary">
+                            <i class="bi bi-search"></i> Get Recommendations
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.CITY_LOCALITIES = {{ options.city_localities | tojson }};
+</script>
+{% endblock %}

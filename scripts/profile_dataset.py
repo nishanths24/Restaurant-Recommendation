@@ -85,3 +85,4 @@ with open("reports/data_profile.md", "w", encoding="utf-8") as f:
     f.write(report_content)
 
 print(f"\nWrote reports/data_profile.md successfully.")
+

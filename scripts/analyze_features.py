@@ -26,3 +26,4 @@ print(df['Price range'].value_counts().sort_index())
 print("\nRating distributions (non-zero):")
 rated = df[df['Aggregate rating'] > 0]
 print(rated['Aggregate rating'].describe())
+
