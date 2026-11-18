@@ -6,26 +6,34 @@ import subprocess
 import sys
 
 def verify_live():
-    print("Launching DineMind Flask server on 127.0.0.1:5000...")
-    proc = subprocess.Popen([sys.executable, "app.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    
-    # Retry loop waiting for server to bind port
-    connected = False
-    for attempt in range(15):
-        time.sleep(1)
-        try:
-            with urllib.request.urlopen("http://127.0.0.1:5000/health", timeout=2) as res:
-                if res.status == 200:
-                    connected = True
-                    break
-        except Exception:
-            continue
-            
-    if not connected:
-        proc.terminate()
-        stdout, _ = proc.communicate(timeout=3)
-        print("Server output:\n", stdout)
-        raise RuntimeError("Server failed to respond on 127.0.0.1:5000")
+    # Check if server is already running on port 5000
+    already_running = False
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:5000/health", timeout=2) as res:
+            if res.status == 200:
+                already_running = True
+                print("DineMind server is already running on 127.0.0.1:5000.")
+    except Exception:
+        pass
+
+    proc = None
+    if not already_running:
+        print("Launching DineMind Flask server on 127.0.0.1:5000...")
+        proc = subprocess.Popen([sys.executable, "app.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        connected = False
+        for attempt in range(15):
+            time.sleep(1)
+            try:
+                with urllib.request.urlopen("http://127.0.0.1:5000/health", timeout=2) as res:
+                    if res.status == 200:
+                        connected = True
+                        break
+            except Exception:
+                continue
+        if not connected:
+            if proc:
+                proc.terminate()
+            raise RuntimeError("Server failed to respond on 127.0.0.1:5000")
         
     try:
         # 1. Health check
@@ -41,18 +49,13 @@ def verify_live():
             assert res.status == 200
             html = res.read().decode()
             assert "DineMind" in html
-            assert "Discover restaurants" in html
-            assert "you'll love." in html
-            assert "Find My Restaurant" in html
-            assert "Explore Restaurants" in html
-            assert "Personalized Recommendations" in html
-            assert "Explore Global Cuisines" in html
-            assert "Smart Budget Matching" in html
-            assert "9,551" in html
-            assert "146" in html
-            assert "140" in html
+            assert "Where Every Taste" in html
+            assert "Finds Its Place" in html
+            assert "Discover Restaurants" in html
+            assert "Explore Cuisines" in html
+            assert "Tonight's Discoveries" in html
             assert "hero_dish.jpg" in html
-            print("  [OK] Homepage: Hero, 3 feature cards, stats (9,551/146/140), and dish visual verified")
+            print("  [OK] Homepage: Editorial Hero, Tonights Discoveries, and dish visual verified")
 
         # 3. Find Restaurants page
         print("Testing GET /find (Preference Form)...")
@@ -111,12 +114,13 @@ def verify_live():
             
         print("\nAll 8 live HTTP endpoints & navigation actions VERIFIED SUCCESSFULLY!")
     finally:
-        print("Stopping Flask server...")
-        proc.terminate()
-        try:
-            proc.wait(timeout=3)
-        except Exception:
-            proc.kill()
+        if proc:
+            print("Stopping Flask server...")
+            proc.terminate()
+            try:
+                proc.wait(timeout=3)
+            except Exception:
+                proc.kill()
 
 if __name__ == "__main__":
     verify_live()
