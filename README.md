@@ -878,5 +878,7 @@ Create a `.env` file in the project root (reference `.env.example`):
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete terms.
 
 ---
+-**Demo:**(https://dinemind-ai.vercel.app/find)
+---
 
 > **Disclaimer:** *Recommendation match scores denote mathematical alignment with user-specified preferences and historical customer ratings. They do not constitute an absolute guarantee of current culinary quality, allergen safety, or operational status.*
