@@ -205,8 +205,10 @@ def create_app(config_class=Config):
 
     return app
 
+# Expose top-level WSGI instance for Vercel Serverless / Gunicorn
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     print(f"\n* DineMind Recommender running on http://{Config.FLASK_HOST}:{Config.FLASK_PORT}")
     app.run(
         host=Config.FLASK_HOST,

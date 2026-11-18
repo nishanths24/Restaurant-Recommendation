@@ -3,10 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Caches
+# Caches & test artifacts
 .pytest_cache/
 .coverage
 htmlcov/
+*.log
 
 # Environments
 .venv/
@@ -14,10 +15,21 @@ env/
 venv/
 ENV/
 
-# Environment variables
+# Environment variables & local secrets
 .env
+.env.local
 
-# OS generated
+# Operating System files
 .DS_Store
 Thumbs.db
+desktop.ini
 
+# Reference Media & Video Files (Reference design assets not required for runtime)
+Resto UI.mp4
+*.mp4
+
+# Vercel deployment cache
+.vercel/
+
+# Node modules
+node_modules/
