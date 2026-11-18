@@ -159,6 +159,8 @@ p, span, div {
 .hero-eyebrow {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 8px;
     font-size: 0.78rem;
     font-weight: 700;
@@ -219,6 +221,8 @@ a.btn-danger,
     outline: none !important;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 8px;
     text-decoration: none;
     box-shadow: none !important;
@@ -269,6 +273,8 @@ a.btn-danger:active {
     border: 1px solid #30302D !important;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 8px;
     transition: background-color 0.15s ease, border-color 0.15s ease !important;
     text-decoration: none;
