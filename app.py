@@ -11,20 +11,56 @@ from src.data_loader import load_processed_data, load_raw_data
 from src.preprocessing import preprocess_dataframe
 from src.recommender import RestaurantRecommender
 
+class VercelPathFixMiddleware:
+    """
+    WSGI middleware ensuring proper path resolution when deployed behind
+    Vercel rewrites or serverless proxies (e.g. /api/index, /api/app, /api).
+    """
+    def __init__(self, wsgi_app):
+        self.wsgi_app = wsgi_app
+
+    def __call__(self, environ, start_response):
+        matched_path = environ.get("HTTP_X_MATCHED_PATH")
+        if matched_path and not matched_path.startswith("/api/index"):
+            environ["PATH_INFO"] = matched_path
+
+        path = environ.get("PATH_INFO", "")
+        if not path or path in ("/api/index", "/api/index/", "/api", "/api/"):
+            environ["PATH_INFO"] = "/"
+        elif path.startswith("/api/index/"):
+            environ["PATH_INFO"] = path[len("/api/index"):]
+        elif path.startswith("/api/"):
+            environ["PATH_INFO"] = path[len("/api"):]
+        if not environ["PATH_INFO"]:
+            environ["PATH_INFO"] = "/"
+        return self.wsgi_app(environ, start_response)
+
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder=str(Config.BASE_DIR / "templates"),
+        static_folder=str(Config.BASE_DIR / "static")
+    )
     app.config.from_object(config_class)
     
-    # 1. Load or prepare processed data
+    # Attach Vercel path fix middleware for serverless WSGI compatibility
+    app.wsgi_app = VercelPathFixMiddleware(app.wsgi_app)
+    
+    # 1. Load or prepare processed data safely without persistent write dependency
     try:
-        if not Config.PROCESSED_DATA_PATH.exists():
-            print(f"[DineMind] Cleaned data not found. Auto-preprocessing from {Config.RAW_DATA_PATH}...")
+        if Config.PROCESSED_DATA_PATH.exists():
+            df_clean = load_processed_data()
+        elif Config.RAW_DATA_PATH.exists():
+            print(f"[DineMind] Cleaned data not found. In-memory preprocessing from {Config.RAW_DATA_PATH}...")
             df_raw = load_raw_data()
             df_clean, _ = preprocess_dataframe(df_raw)
-            Config.PROCESSED_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
-            df_clean.to_csv(Config.PROCESSED_DATA_PATH, index=False, encoding="utf-8")
+            try:
+                Config.PROCESSED_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+                df_clean.to_csv(Config.PROCESSED_DATA_PATH, index=False, encoding="utf-8")
+            except (OSError, PermissionError):
+                pass  # Serverless read-only filesystem guard
         else:
-            df_clean = load_processed_data()
+            df_clean = None
     except Exception as e:
         print(f"[DineMind] Warning: Could not initialize dataset: {e}")
         df_clean = None
@@ -34,6 +70,8 @@ def create_app(config_class=Config):
     app.recommender = recommender
     app.df = df_clean
 
+    @app.route("/api/index", methods=["GET"])
+    @app.route("/api/index/", methods=["GET"])
     @app.route("/", methods=["GET"])
     def index():
         if app.recommender is None:
@@ -56,6 +94,7 @@ def create_app(config_class=Config):
             active_page="home"
         )
 
+    @app.route("/api/index/find", methods=["GET"])
     @app.route("/find", methods=["GET"])
     def find_page():
         if app.recommender is None:
@@ -63,6 +102,7 @@ def create_app(config_class=Config):
         options = app.recommender.get_filter_options()
         return render_template("find.html", options=options, active_page="find")
 
+    @app.route("/api/index/explore", methods=["GET"])
     @app.route("/explore", methods=["GET"])
     def explore_page():
         if app.df is None or app.recommender is None:
@@ -104,6 +144,7 @@ def create_app(config_class=Config):
             active_page="explore"
         )
 
+    @app.route("/api/index/cuisines", methods=["GET"])
     @app.route("/cuisines", methods=["GET"])
     def cuisines_page():
         if app.df is None or app.recommender is None:
@@ -123,6 +164,7 @@ def create_app(config_class=Config):
         
         return render_template("cuisines.html", cuisine_data=sorted_cuisines, active_page="cuisines")
 
+    @app.route("/api/index/recommend", methods=["POST"])
     @app.route("/recommend", methods=["POST"])
     def recommend():
         if app.recommender is None:
@@ -146,6 +188,7 @@ def create_app(config_class=Config):
         result = app.recommender.recommend(raw_prefs)
         return render_template("results.html", result=result, active_page="find")
 
+    @app.route("/api/index/similar/<int:restaurant_id>", methods=["GET"])
     @app.route("/similar/<int:restaurant_id>", methods=["GET"])
     def similar(restaurant_id):
         if app.recommender is None or app.df is None:
@@ -170,10 +213,12 @@ def create_app(config_class=Config):
             active_page="find"
         )
 
+    @app.route("/api/index/about", methods=["GET"])
     @app.route("/about", methods=["GET"])
     def about():
         return render_template("about.html", active_page="about")
 
+    @app.route("/api/index/health", methods=["GET"])
     @app.route("/health", methods=["GET"])
     def health():
         is_ready = app.recommender is not None

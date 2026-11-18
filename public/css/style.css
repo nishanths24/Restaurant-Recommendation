@@ -1,0 +1,1234 @@
+/* ==========================================================================
+   DineMind — Understated Dark Luxury / Editorial Restaurant Design Stylesheet
+   Color Palette:
+     Main background:     #090B0D
+     Card background:     #17191B
+     Secondary surfaces:  #202224
+     Primary accent:      #C58A36 (muted warm amber)
+     Secondary accent:    #D6B77A (soft champagne)
+     Primary text:        #E5E1D9
+     Secondary text:      #A6A29A
+     Borders:             #30302D
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --bg-main: #090B0D;
+    --bg-card: #17191B;
+    --bg-surface: #202224;
+    --bg-surface-hover: #282a2d;
+    
+    --accent-primary: #C58A36;
+    --accent-primary-hover: #b0782b;
+    --accent-secondary: #D6B77A;
+    
+    --text-primary: #E5E1D9;
+    --text-secondary: #A6A29A;
+    --text-muted: #737069;
+    
+    --border-color: #30302D;
+    --border-glass: #30302D;
+    --border-neutral: #30302D;
+    
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ==========================================================================
+   Global Reset: Zero Glow, Zero Shadows, Zero Filter Effects
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Base Body: Flat Deep Background */
+body {
+    font-family: var(--font-sans);
+    background-color: #090B0D !important;
+    background-image: none !important;
+    color: #E5E1D9 !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1;
+}
+
+/* Typography Helpers */
+.font-serif {
+    font-family: var(--font-serif);
+}
+
+.font-sans {
+    font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #E5E1D9;
+}
+
+p, span, div {
+    color: inherit;
+}
+
+/* ==========================================================================
+   Top Navigation Bar
+   ========================================================================== */
+.navbar-custom {
+    background: #090B0D !important;
+    border-bottom: 1px solid #30302D !important;
+    padding: 0.85rem 0;
+}
+
+.navbar-brand-custom {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: -0.5px;
+    color: #E5E1D9 !important;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-link {
+    color: #A6A29A !important;
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 20px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #E5E1D9 !important;
+    background: #202224 !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #D6B77A !important;
+    font-weight: 600;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    padding: 3.5rem 0 4.5rem;
+    overflow: hidden;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #A6A29A !important;
+    margin-bottom: 1.5rem;
+}
+
+.hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #C58A36 !important;
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: #E5E1D9 !important;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title .highlight {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #D6B77A !important;
+    color: #D6B77A !important;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: #A6A29A !important;
+    max-width: 520px;
+    margin-bottom: 2.2rem;
+}
+
+/* ==========================================================================
+   Buttons (Solid Muted Amber #C58A36, Dark Charcoal Text, Zero Glow)
+   ========================================================================== */
+.btn-pill-primary,
+.recommend-btn,
+.get-recommendations-btn,
+button.btn-danger,
+a.btn-danger,
+.btn-warning {
+    background: #C58A36 !important;
+    color: #090B0D !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border-radius: 50px !important;
+    border: 1px solid #C58A36 !important;
+    outline: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-pill-primary:hover,
+.recommend-btn:hover,
+.get-recommendations-btn:hover,
+button.btn-danger:hover,
+a.btn-danger:hover,
+.btn-warning:hover {
+    background: #b0782b !important;
+    border-color: #b0782b !important;
+    color: #090B0D !important;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+.btn-pill-primary:active,
+.recommend-btn:active,
+.get-recommendations-btn:active,
+button.btn-danger:active,
+a.btn-danger:active {
+    background: #a06b23 !important;
+    border-color: #a06b23 !important;
+    transform: none !important;
+}
+
+.btn-pill-primary:focus-visible,
+.recommend-btn:focus-visible,
+.get-recommendations-btn:focus-visible {
+    outline: 2px solid #D6B77A !important;
+    outline-offset: 2px !important;
+}
+
+/* Secondary Buttons */
+.btn-pill-secondary {
+    background: #202224 !important;
+    color: #E5E1D9 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 11px 26px;
+    border-radius: 50px !important;
+    border: 1px solid #30302D !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.btn-pill-secondary:hover {
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    transform: none !important;
+}
+
+.btn-pill-secondary:focus-visible {
+    outline: 2px solid #D6B77A !important;
+    outline-offset: 2px !important;
+}
+
+/* Small Action / Outline Buttons */
+.btn-outline-warning {
+    color: #D6B77A !important;
+    border-color: #30302D !important;
+    background: #202224 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-outline-warning:hover {
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    transform: none !important;
+}
+
+.btn-outline-secondary {
+    color: #A6A29A !important;
+    border-color: #30302D !important;
+    background: #202224 !important;
+}
+
+.btn-outline-secondary:hover {
+    color: #E5E1D9 !important;
+    background: #282a2d !important;
+    border-color: #454540 !important;
+}
+
+/* ==========================================================================
+   Hero Visual Presentation & Cards (Flat #17191B, Borders #30302D)
+   ========================================================================== */
+.hero-visual-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-dish-card {
+    position: relative;
+    width: 100%;
+    max-width: 490px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+}
+
+.hero-dish-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.92) contrast(1.05);
+}
+
+.hero-dish-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.15rem 1.5rem;
+    background: #17191B !important;
+    border-top: 1px solid #30302D !important;
+}
+
+.feature-badge-card {
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
+    padding: 0.9rem 1.15rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.15s ease;
+}
+
+.feature-badge-card:hover {
+    border-color: #454540 !important;
+    transform: none !important;
+}
+
+.feature-icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.feature-card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #E5E1D9 !important;
+    margin-bottom: 2px;
+}
+
+.feature-card-desc {
+    font-size: 0.78rem;
+    color: #A6A29A !important;
+    line-height: 1.35;
+    margin-bottom: 0;
+}
+
+.hero-info-footer-card {
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+    font-size: 0.82rem;
+    color: #A6A29A !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   Statistics Section (Flat #17191B, Borders #30302D)
+   ========================================================================== */
+.stats-section {
+    padding: 2.5rem 0;
+    border-top: 1px solid #30302D !important;
+    border-bottom: 1px solid #30302D !important;
+    background: #17191B !important;
+    margin-bottom: 3.5rem;
+}
+
+.stat-item {
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
+    color: #D6B77A !important;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #D6B77A !important;
+}
+
+.stat-label {
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #A6A29A !important;
+}
+
+.stat-subtext {
+    font-size: 0.75rem;
+    color: #737069 !important;
+}
+
+/* ==========================================================================
+   Panels, Forms & Cards (#17191B, Borders #30302D)
+   ========================================================================== */
+.glass-panel {
+    background: #17191B !important;
+    border: 1px solid #30302D !important;
+    border-radius: 14px;
+}
+
+.glass-panel:hover {
+    border-color: #454540 !important;
+}
+
+.section-heading-wrapper {
+    margin-bottom: 2rem;
+}
+
+.section-subtitle {
+    color: #D6B77A !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #E5E1D9 !important;
+    letter-spacing: -0.5px;
+}
+
+.form-section-title-dark {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #E5E1D9 !important;
+    border-bottom: 1px solid #30302D !important;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ==========================================================================
+   Input Fields (#202224, Border #30302D)
+   ========================================================================== */
+.form-control-dark,
+.form-select-dark {
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #E5E1D9 !important;
+    border-radius: 6px !important;
+    padding: 0.7rem 1rem !important;
+    font-size: 0.92rem !important;
+    outline: none !important;
+    transition: border-color 0.15s ease !important;
+}
+
+.form-control-dark::placeholder {
+    color: #737069 !important;
+}
+
+.form-control-dark:focus,
+.form-select-dark:focus {
+    background-color: #202224 !important;
+    border-color: #D6B77A !important;
+    color: #E5E1D9 !important;
+    outline: none !important;
+}
+
+.form-select-dark option {
+    background-color: #17191B !important;
+    color: #E5E1D9 !important;
+}
+
+.input-group-text-dark {
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
+    border-right: none !important;
+    color: #D6B77A !important;
+}
+
+/* ==========================================================================
+   Cuisine Badges (#202224 default, #C58A36 active)
+   ========================================================================== */
+.cuisine-badge {
+    cursor: pointer;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #30302D !important;
+    background-color: #202224 !important;
+    color: #A6A29A !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    user-select: none;
+    display: inline-block;
+    margin: 3px;
+}
+
+.cuisine-badge:hover {
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+    background-color: #282a2d !important;
+}
+
+.cuisine-badge.active {
+    background: #C58A36 !important;
+    color: #090B0D !important;
+    border-color: #C58A36 !important;
+    font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   Result Cards (#17191B, Borders #30302D)
+   ========================================================================== */
+.result-card-dark {
+    background: #17191B !important;
+    border-radius: 12px;
+    border: 1px solid #30302D !important;
+    transition: border-color 0.15s ease;
+    overflow: hidden;
+}
+
+.result-card-dark:hover {
+    border-color: #454540 !important;
+    transform: none !important;
+}
+
+/* Clean Solid Score Badges */
+.score-badge-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #E5E1D9;
+    border: 1px solid #30302D !important;
+}
+
+.score-high {
+    background: #234333 !important;
+    border-color: #3b6d54 !important;
+    color: #a3d9bc !important;
+}
+
+.score-medium {
+    background: #473318 !important;
+    border-color: #7d5725 !important;
+    color: #D6B77A !important;
+}
+
+.score-low {
+    background: #202224 !important;
+    border-color: #30302D !important;
+    color: #A6A29A !important;
+}
+
+.rating-star-badge-dark {
+    background-color: #202224 !important;
+    border: 1px solid #30302D !important;
+    color: #D6B77A !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.explanation-tag-dark {
+    background-color: #202224 !important;
+    color: #E5E1D9 !important;
+    border: 1px solid #30302D !important;
+    border-radius: 10px;
+    padding: 3px 10px;
+    font-size: 0.77rem;
+    font-weight: 500;
+    display: inline-block;
+    margin: 2px 4px 2px 0;
+}
+
+/* ==========================================================================
+   Editorial Color Overrides for Utility Classes
+   ========================================================================== */
+.text-warning,
+.bi-star-fill.text-warning,
+.bi-star-half.text-warning,
+.bi-compass-fill.text-warning,
+.bi-geo-alt-fill.text-warning,
+.bi-wallet2.text-warning,
+.bi-cpu-fill.text-warning,
+.bi-lightbulb-fill.text-warning,
+.bi-award.text-warning,
+.bi-globe2.text-warning,
+.bi-stars.text-warning {
+    color: #D6B77A !important;
+}
+
+.text-danger {
+    color: #C58A36 !important;
+}
+
+.text-success {
+    color: #8cb89f !important;
+}
+
+.text-light,
+.text-white {
+    color: #E5E1D9 !important;
+}
+
+.text-secondary,
+.text-muted {
+    color: #A6A29A !important;
+}
+
+.bg-warning {
+    background-color: #C58A36 !important;
+    color: #090B0D !important;
+}
+
+.bg-danger {
+    background-color: #C58A36 !important;
+    color: #090B0D !important;
+}
+
+.bg-secondary {
+    background-color: #202224 !important;
+    color: #E5E1D9 !important;
+    border: 1px solid #30302D !important;
+}
+
+.bg-dark {
+    background-color: #17191B !important;
+    border-color: #30302D !important;
+}
+
+.bg-light {
+    background-color: #202224 !important;
+}
+
+.border-secondary {
+    border-color: #30302D !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #30302D !important;
+}
+
+.border-top {
+    border-top: 1px solid #30302D !important;
+}
+
+/* ==========================================================================
+   Footer (#090B0D, Border #30302D)
+   ========================================================================== */
+.footer-dark {
+    background-color: #090B0D !important;
+    border-top: 1px solid #30302D !important;
+    color: #A6A29A !important;
+    padding: 2.5rem 0 2rem;
+    font-size: 0.88rem;
+    margin-top: 5rem;
+}
+
+.footer-dark a {
+    color: #A6A29A !important;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-dark a:hover {
+    color: #D6B77A !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #090B0D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #202224;
+    border: 1px solid #30302D;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #30302D;
+}
+
+/* ==========================================================================
+   Cinematic Editorial Redesign Styles (Resto UI / The Nocturne Architecture)
+   ========================================================================== */
+
+/* Editorial Circled-Arrow Buttons */
+.btn-editorial-primary {
+    background: #C58A36 !important;
+    color: #090B0D !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem;
+    padding: 8px 10px 8px 24px;
+    border-radius: 50px !important;
+    border: 1px solid #C58A36 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-editorial-primary:hover {
+    background: #b0782b !important;
+    border-color: #b0782b !important;
+    color: #090B0D !important;
+}
+
+.btn-editorial-secondary {
+    background: #202224 !important;
+    color: #E5E1D9 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 10px 8px 24px;
+    border-radius: 50px !important;
+    border: 1px solid #30302D !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn-editorial-secondary:hover {
+    background: #282a2d !important;
+    border-color: #454540 !important;
+    color: #E5E1D9 !important;
+}
+
+.btn-arrow-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #090B0D;
+    color: #C58A36;
+    font-size: 0.85rem;
+}
+
+.btn-editorial-secondary .btn-arrow-circle {
+    background: #17191B;
+    color: #D6B77A;
+    border: 1px solid #30302D;
+}
+
+/* Section 1: Hero Editorial - Full Viewport Width & Premium Proportions */
+.hero-editorial-section {
+    padding: 5rem 0 4rem;
+    position: relative;
+    border-bottom: 1px solid #30302D;
+    background: #090B0D;
+}
+
+.hero-eyebrow-minimal {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #A6A29A;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-eyebrow-minimal .hero-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #C58A36;
+}
+
+.hero-headline-cinematic {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+    line-height: 1.12;
+    letter-spacing: -1px;
+    color: #E5E1D9;
+    margin-bottom: 1.5rem;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+.hero-headline-cinematic .serif-italic {
+    font-style: italic;
+    color: #D6B77A;
+}
+
+.hero-editorial-desc {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #A6A29A;
+    max-width: 580px;
+    margin-bottom: 2.2rem;
+}
+
+.hero-meta-strip {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #737069;
+    padding-top: 1.75rem;
+    border-top: 1px solid #30302D;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.hero-dish-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #17191B;
+    border: 1px solid #30302D;
+}
+
+.hero-cinematic-img {
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    max-height: 520px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+@media (max-width: 991px) {
+    .hero-editorial-section {
+        padding: 3rem 0;
+    }
+    .hero-dish-frame,
+    .hero-cinematic-img {
+        min-height: 300px;
+        height: 300px;
+    }
+    .hero-editorial-desc {
+        max-width: 100%;
+    }
+}
+
+/* Section 2: Our Philosophy */
+.philosophy-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.section-eyebrow {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #D6B77A;
+    margin-bottom: 0.6rem;
+}
+
+.section-editorial-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 700;
+    color: #E5E1D9;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+}
+
+.philosophy-card {
+    position: relative;
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 10px;
+    padding: 2.2rem 1.8rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+.philosophy-card:hover {
+    border-color: #454540;
+}
+
+.philosophy-watermark {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-family: var(--font-serif);
+    font-size: 4.8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #202224;
+    user-select: none;
+    pointer-events: none;
+}
+
+.philosophy-step {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #D6B77A;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.philosophy-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #E5E1D9;
+    margin-bottom: 0.75rem;
+}
+
+.philosophy-card-body {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #A6A29A;
+    margin-bottom: 0;
+}
+
+/* Section 3: Tonight's Discoveries */
+.discoveries-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.discovery-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 10px;
+    padding: 1.8rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.15s ease;
+}
+
+.discovery-card:hover {
+    border-color: #454540;
+}
+
+.discovery-badge {
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #D6B77A;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.discovery-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #E5E1D9;
+    margin-bottom: 0.35rem;
+}
+
+.discovery-location {
+    font-size: 0.82rem;
+    color: #A6A29A;
+    margin-bottom: 0.85rem;
+}
+
+.discovery-cuisine-tag {
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #E5E1D9;
+    font-size: 0.74rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.discovery-metric-strip {
+    background: #202224;
+    border: 1px solid #30302D;
+    border-radius: 6px;
+    padding: 0.65rem 0.85rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+}
+
+/* Section 4: The DineMind Experience */
+.experience-section {
+    padding: 5rem 0;
+    background: #090B0D;
+    border-bottom: 1px solid #30302D;
+}
+
+.engine-pillar-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.15s ease;
+}
+
+.engine-pillar-card:hover {
+    border-color: #454540;
+}
+
+.engine-pillar-weight {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #D6B77A;
+    min-width: 52px;
+    text-align: center;
+}
+
+.quick-launchpad-card {
+    background: #17191B;
+    border: 1px solid #30302D;
+    border-radius: 12px;
+    padding: 2.2rem;
+}
+
+/* Section 5: Signature Editorial Footer */
+.signature-footer-section {
+    background: #090B0D;
+    padding: 5rem 0 3rem;
+    border-top: 1px solid #30302D;
+}
+
+.footer-top-row {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #30302D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-slogan {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #D6B77A;
+    text-transform: uppercase;
+}
+
+.footer-nav-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.footer-nav-links a {
+    color: #A6A29A;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.footer-nav-links a:hover {
+    color: #E5E1D9;
+}
+
+.back-to-top-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #202224;
+    border: 1px solid #30302D;
+    color: #E5E1D9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.back-to-top-btn:hover {
+    background: #282a2d;
+    border-color: #454540;
+    color: #D6B77A;
+}
+
+.footer-wordmark-huge {
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 11vw, 9.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #17191B;
+    -webkit-text-stroke: 1px #30302D;
+    text-transform: none;
+    text-align: center;
+    padding: 3rem 0 2rem;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.footer-wordmark-huge:hover {
+    color: #202224;
+}
+
+.footer-stats-strip {
+    padding: 1.5rem 0;
+    border-top: 1px solid #30302D;
+    border-bottom: 1px solid #30302D;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+    text-align: center;
+}
+
+.footer-stat-number {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #D6B77A;
+}
+
+.footer-stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #737069;
+}
+
+.footer-bottom-row {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.78rem;
+    color: #737069;
+}

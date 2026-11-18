@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "{templates/**,data/**,public/**,static/**,src/**}"
+    },
+    "app.py": {
+      "includeFiles": "{templates/**,data/**,public/**,static/**,src/**}"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",

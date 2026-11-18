@@ -35,3 +35,9 @@ Resto UI.mp4
 node_modules/
 
 .vercel
+
+# Vercel deployment cache
+.vercel/
+
+# Node modules
+node_modules/
